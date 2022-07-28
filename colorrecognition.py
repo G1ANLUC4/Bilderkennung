@@ -24,6 +24,8 @@ def Farberkennung(MinWinkel, MaxWinkel, MinSaettigung, MaxSaettigung, MinHelligk
         cv.imshow('Maske', maske)               # Anzeigen der Maske
         cv.imshow('Angewandte Maske', kombi)    # Anzeigen des zusammengesetzten Bildes
 
+        # Hier fehlt noch die Positionsausgabe
+
         if cv.waitKey(1) == ord("0"):       # Abbruchbedingung der Schleife festgelegt als Knopfdruck 0
             break
 
