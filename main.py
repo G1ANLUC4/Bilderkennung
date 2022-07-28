@@ -16,7 +16,7 @@ if Methode == 1:
     # Aufloesung        -->     Verhältnis zwischen Framerate und Algorithmus-Durchführung
     # Mindestabstand    -->     Mindestabstand zwischen den Zentren der zu erkennenden Kreise
     # Kantenwert        -->     Schwellenwert der an den Canny-Algorithmus weitergegeben wird (Matrixauflösung)
-    # Perfektion        -->     Je kleiner dieser Wert, desto genauer müssen die Kreise sein, um erkannt zu werden
+    # Rundheit          -->     Je kleiner dieser Wert, desto genauer müssen die Kreise sein, um erkannt zu werden
     # MinRadius         -->     Kleinster Kreisradius, ab dem der Kreis gesucht wird
     # MaxRadius         -->     Größter Kreisradius, bis zu dem der Kreis gesucht werden soll
 

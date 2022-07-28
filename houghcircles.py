@@ -1,4 +1,4 @@
-def Kreiserkennung(Aufloesung, Mindestabstand, Kantenwert, Perfektion, MinRadius, MaxRadius):
+def Kreiserkennung(Aufloesung, Mindestabstand, Kantenwert, Rundheit, MinRadius, MaxRadius):
 
     import cv2 as cv
     import numpy as np
@@ -16,7 +16,7 @@ def Kreiserkennung(Aufloesung, Mindestabstand, Kantenwert, Perfektion, MinRadius
 
         circles = cv.HoughCircles(blurr, cv.HOUGH_GRADIENT,
                                   Aufloesung, Mindestabstand,
-                                  param1=Kantenwert, param2=Perfektion,
+                                  param1=Kantenwert, param2=Rundheit,
                                   minRadius=MinRadius, maxRadius=MaxRadius)
 
         if circles is not None:
