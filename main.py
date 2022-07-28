@@ -1,9 +1,12 @@
 import houghcircles as hc
 import colorrecognition as cr
+import methode3 as m3
+import methode4 as m4
+import methode5 as m5
 
 # Hinweis: Die Ausführung des Codes kann mit Drücken der Taste "0" beendet werden.
 # Hier Methodenauswahl über Änderung des int-Wertes: (Legende siehe unten)
-Methode = 2
+Methode = 3
 
 if Methode == 1:
     print("HoughCircles")
@@ -35,12 +38,30 @@ elif Methode == 2:
 
 elif Methode == 3:
     print("Methode 3 noch nicht verfügbar!")
+    m3.DritteArt(0)
+    # Parameter hierbei sind:
+
+    # Para1             -->     BeispielParameter
+
+    # Quelle: www.url.org
 
 elif Methode == 4:
     print("Methode 4 noch nicht verfügbar!")
+    m4.VierteArt(0)
+    # Parameter hierbei sind:
+
+    # Para1             -->     BeispielParameter
+
+    # Quelle: www.url.org
 
 elif Methode == 5:
     print("Methode 5 noch nicht verfügbar!")
+    m5.FuenfteArt(0)
+    # Parameter hierbei sind:
+
+    # Para1             -->     BeispielParameter
+
+    # Quelle: www.url.org
 
 else:
     print("Bitte wählen Sie eine gültige Methode aus...")
