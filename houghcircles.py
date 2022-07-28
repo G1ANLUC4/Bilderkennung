@@ -1,0 +1,39 @@
+def Kreiserkennung(Aufloesung, Mindestabstand, Kantenwert, Perfektion, MinRadius, MaxRadius):
+
+    import cv2 as cv
+    import numpy as np
+
+    cam = cv.VideoCapture(1)    # Auswahl der Kamera, wobei 0 --> Innenkamera und 1 --> Außenkamera
+
+    while True:                 # While-Schleife, damit das Programm per Knopfdruck geschlossen werden kann
+
+        _, img = cam.read()                                 # Auslesen der Kamera
+        # img = img[100:200, 100:200]                       # Zuschneiden des Bildes
+
+        grau = cv.cvtColor(img, cv.COLOR_BGR2GRAY)          # Konvertierung in Graustufen
+        blurr = cv.bilateralFilter(grau, 10, 50, 50)        # Verschwimmen des Bildes
+        # kanten = cv.Canny(grau, 30, 100)
+
+        circles = cv.HoughCircles(blurr, cv.HOUGH_GRADIENT,
+                                  Aufloesung, Mindestabstand,
+                                  param1=Kantenwert, param2=Perfektion,
+                                  minRadius=MinRadius, maxRadius=MaxRadius)
+
+        if circles is not None:
+            circles = np.uint16(np.around(circles))                     # Konvertieren der Erkannten kreise in U-Int
+            for i in circles[0, :]:                                     # Auslesen der Kreiszentren
+                # Bild, Zentrum, Radius, Farbe in RGB, Dicke
+                cv.circle(img, (i[0], i[1]), i[2], (255, 0, 0), 5)      # Zeichnen des Kreises
+                cv.circle(img, (i[0], i[1]), 1, (0, 0, 0), 5)           # Zeichnen des Zentrums
+                print(i[0], i[1])                                       # Ausgabe der x und y Koordinate
+
+        cv.imshow('Erkennungsabbild', img)        # Anzeigen des Bildes auf Monitor, zur Überwachung
+        # cv.imshow('Graustufen', grau)           # Anzeigen des Graustufenbildes
+        # cv.imshow('Bilateral', blurr)           # Anzeigen des verschwommenen Bildes
+        # cv.imshow('Kantenerkennung', kanten)    # Anzeigen des Kantenbildes
+
+        if cv.waitKey(1) == ord("0"):             # Abbruchbedingung der Schleife festgelegt als Knopfdruck 0
+            break
+
+    cam.release()               # Freigeben der Kamera für andere Zwecke
+    cv.destroyAllWindows()      # Schließen aller Fenster, die durch Anwendung geöffnet wurden.
