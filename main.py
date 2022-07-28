@@ -1,12 +1,13 @@
 import houghcircles as hc
-import colorrecognition as cr
-import methode3 as m3
+import color as cr
+import contrast as m3
 import methode4 as m4
 import methode5 as m5
+import snippets as sn
 
 # Hinweis: Die Ausführung des Codes kann mit Drücken der Taste "0" beendet werden.
 # Hier Methodenauswahl über Änderung des int-Wertes: (Legende siehe unten)
-Methode = 3
+Methode = 6
 
 if Methode == 1:
     print("HoughCircles")
@@ -38,7 +39,7 @@ elif Methode == 2:
 
 elif Methode == 3:
     print("Methode 3 noch nicht verfügbar!")
-    m3.DritteArt(0)
+    m3.Kontrasterkennung(0)
     # Parameter hierbei sind:
 
     # Para1             -->     BeispielParameter
@@ -62,6 +63,10 @@ elif Methode == 5:
     # Para1             -->     BeispielParameter
 
     # Quelle: www.url.org
+
+elif Methode == 6:
+    print("Unbekannt Methode")
+    sn.Unbekannt()
 
 else:
     print("Bitte wählen Sie eine gültige Methode aus...")

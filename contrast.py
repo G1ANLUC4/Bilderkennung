@@ -1,4 +1,4 @@
-def DritteArt(Para1):
+def Kontrasterkennung(Para1):
 
     import cv2 as cv
 
