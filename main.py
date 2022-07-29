@@ -7,7 +7,7 @@ import snippets as sn
 
 # Hinweis: Die Ausführung des Codes kann mit Drücken der Taste "0" beendet werden.
 # Hier Methodenauswahl über Änderung des int-Wertes: (Legende siehe unten)
-Methode = 6
+Methode = 3
 
 if Methode == 1:
     print("HoughCircles")
@@ -39,12 +39,22 @@ elif Methode == 2:
 
 elif Methode == 3:
     print("Methode 3 noch nicht verfügbar!")
-    m3.Kontrasterkennung(0)
+    m3.Kontrasterkennung(100, 255, 5, 3, 1000, 50000)
     # Parameter hierbei sind:
 
-    # Para1             -->     BeispielParameter
+    # Untergrenze       -->     unterer Grenzwert, ab dem ein Pixel weiß dargestellt wird
+    # Obergrenze        -->     oberer Grenzwert, bis zu dem ein Pixel weiß dargestellt wird
+    # Ordnung           -->     Größe der Ellipsen-Maske, mit der gesucht wird
+    # Iterationen       -->     Anzahl der Iterationen, mit der die Bit-Maske durchläuft
+    # MinFlaeche        -->     Minimale Fläche des Kreises, der erkannt werden soll
+    # MaxFlaeche        -->     Maximale Fläche des Kreises, der erkannt werden soll
 
-    # Quelle: www.url.org
+    # Quelle: https://docs.opencv.org/4.x/d7/d1b/group__imgproc__misc.html#gaa9e58d2860d4afa658ef70a9b1115576
+    # Quelle: https://docs.opencv.org/4.x/d7/d1b/group__imgproc__misc.html#gae8a4a146d1ca78c626a53577199e9c57
+    # Quelle: https://www.wenglor.com/de/Threshold/l/cxmCID148434
+    # Quelle: https://docs.opencv.org/3.4/d3/dc0/group__imgproc__shape.html#ga17ed9f5d79ae97bd4c7cf18403e1689a
+    # Quelle: https://opencv24-python-tutorials.readthedocs.io/en/latest/
+    #         py_tutorials/py_imgproc/py_morphological_ops/py_morphological_ops.html
 
 elif Methode == 4:
     print("Methode 4 noch nicht verfügbar!")

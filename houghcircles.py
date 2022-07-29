@@ -3,7 +3,8 @@ def Kreiserkennung(Aufloesung, Mindestabstand, Kantenwert, Rundheit, MinRadius, 
     import cv2 as cv
     import numpy as np
 
-    cam = cv.VideoCapture(1)    # Auswahl der Kamera, wobei 0 --> Innenkamera und 1 --> Außenkamera
+    cam = cv.VideoCapture(1)                # Auswahl der Kamera, wobei 0 --> Innenkamera und 1 --> Außenkamera
+    cam.set(cv.CAP_PROP_BUFFERSIZE, 1)      # Verarbeitungszeit maximal 1ms
 
     while True:                 # While-Schleife, damit das Programm per Knopfdruck geschlossen werden kann
 
@@ -27,7 +28,7 @@ def Kreiserkennung(Aufloesung, Mindestabstand, Kantenwert, Rundheit, MinRadius, 
                 cv.circle(img, (i[0], i[1]), 1, (0, 0, 0), 5)           # Zeichnen des Zentrums
                 print(i[0], i[1])                                       # Ausgabe der x und y Koordinate
 
-        cv.imshow('Erkennungsabbild', img)        # Anzeigen des Bildes auf Monitor, zur Überwachung
+        cv.imshow('Kreiserkennung', img)          # Anzeigen des Bildes auf Monitor, zur Überwachung
         # cv.imshow('Graustufen', grau)           # Anzeigen des Graustufenbildes
         # cv.imshow('Bilateral', blurr)           # Anzeigen des verschwommenen Bildes
         # cv.imshow('Kantenerkennung', kanten)    # Anzeigen des Kantenbildes
