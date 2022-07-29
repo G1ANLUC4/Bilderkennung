@@ -21,7 +21,7 @@ def Kreiserkennung(Aufloesung, Mindestabstand, Kantenwert, Rundheit, MinRadius, 
                                   minRadius=MinRadius, maxRadius=MaxRadius)
 
         if circles is not None:
-            circles = np.uint16(np.around(circles))                     # Konvertieren der Erkannten kreise in U-Int
+            circles = np.uint16(np.around(circles))                     # Konvertieren der erkannten Kreise in U-Int
             for i in circles[0, :]:                                     # Auslesen der Kreiszentren
                 # Bild, Zentrum, Radius, Farbe in RGB, Dicke
                 cv.circle(img, (i[0], i[1]), i[2], (255, 0, 0), 5)      # Zeichnen des Kreises
