@@ -27,9 +27,9 @@ def Farberkennung(MinWinkel, MaxWinkel, MinSaettigung, MaxSaettigung, MinHelligk
         print(int(center[1]), int(center[0]))                                           # Ausgabe der x und y Koordinate
 
         cv.imshow('Farberkennung', img)           # Anzeigen des Bildes auf Monitor, zur Überwachung
-        # cv.imshow('HSV-Farbskala', hsv)         # Anzeige des Bildes im HSV-Farbraum
-        # cv.imshow('Maske', maske)               # Anzeigen der Maske
-        # cv.imshow('Angewandte Maske', kombi)    # Anzeigen des zusammengesetzten Bildes
+        cv.imshow('HSV-Farbskala', hsv)         # Anzeige des Bildes im HSV-Farbraum
+        cv.imshow('Maske', maske)               # Anzeigen der Maske
+        cv.imshow('Angewandte Maske', kombi)    # Anzeigen des zusammengesetzten Bildes
 
         if cv.waitKey(1) == ord("0"):       # Abbruchbedingung der Schleife festgelegt als Knopfdruck 0
             break

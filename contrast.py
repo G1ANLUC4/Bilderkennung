@@ -41,10 +41,10 @@ def Kontrasterkennung(Untergrenze, Obergrenze, Ordnung, Iterationen, MinFlaeche,
                 print(int(x), int(y))
 
         cv.imshow('Kontrastsuche', img)               # Anzeigen des Bildes auf Monitor, zur Überwachung
-        # cv.imshow('circles detected', grau)         # Anzeigen des Graustufenbildes
-        # cv.imshow('verschwommen', verschwommen)     # Anzeigen des verschwommenen Bildes
-        # cv.imshow('Thresh-Analyse', thresh)         # Anzeigen des Analyse-Ergebnisses
-        # cv.imshow('opening', ergebnis)              # Anzeigen nach Durchlauf der Bit-Maske
+        cv.imshow('circles detected', grau)         # Anzeigen des Graustufenbildes
+        cv.imshow('verschwommen', verschwommen)     # Anzeigen des verschwommenen Bildes
+        cv.imshow('Thresh-Analyse', thresh)         # Anzeigen des Analyse-Ergebnisses
+        cv.imshow('opening', ergebnis)              # Anzeigen nach Durchlauf der Bit-Maske
 
         if cv.waitKey(1) == ord("0"):       # Abbruchbedingung der Schleife festgelegt als Knopfdruck 0
             break

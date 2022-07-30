@@ -7,7 +7,7 @@ import snippets as sn
 
 # Hinweis: Die Ausführung des Codes kann mit Drücken der Taste "0" beendet werden.
 # Hier Methodenauswahl über Änderung des int-Wertes: (Legende siehe unten)
-Methode = 4
+Methode = 5
 
 if Methode == 1:
     print("HoughCircles")
