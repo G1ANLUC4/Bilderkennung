@@ -14,7 +14,7 @@ def Tiefenerkennung(Aufloesung, Mindestabstand, Kantenwert, Rundheit, MinRadius,
 
         _, img = cam.read()                 # Auslesen der Kamera
         # img = img[100:200, 100:200]       # Zuschneiden des Bildes
-        hoehe, breite, farben = img.shape   # Auslesen der Maße für später
+        hoehe, breite, farbe = img.shape   # Auslesen der Maße für später
 
         # ( Scale : 1 / 255, Size : 256 x 256, Mean Subtraction : ( 123.675, 116.28, 103.53 ), Channels Order : RGB )
         blob = cv.dnn.blobFromImage(img, 1 / 255., (256, 256), (123.675, 116.28, 103.53), True, False)

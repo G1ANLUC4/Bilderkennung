@@ -2,7 +2,7 @@ import houghcircles as hc
 import color as clr
 import contrast as cst
 import depth_estimation as de
-import methode5 as m5
+import mobilenetki as ki
 import snippets as sn
 
 # Hinweis: Die Ausführung des Codes kann mit Drücken der Taste "0" beendet werden.
@@ -72,24 +72,14 @@ elif Methode == 4:
     # Quelle: https://github.com/isl-org/MiDaS/releases/tag/v2_1
 
 elif Methode == 5:
-    print("Methode 5 noch nicht verfügbar!")
-    m5.FuenfteArt(0)
-    # Parameter hierbei sind:
+    print("Mobilenet-KI")
+    ki.KuenstlicheIntelligenz()
 
-    # Para1             -->     BeispielParameter
-
-    # Quelle: www.url.org
+    # Quelle: https://electreeks.de/project/exkurs-in-die-ki-bilderkennung-objekterkennung-mit-opencv-und-mobilenet/
 
 elif Methode == 6:
     print("Unbekannt Methode")
-    sn.Unbekannt(0)
-
-elif Methode == 7853:
-    print("Alle Methoden hintereinander")
-    hc.Kreiserkennung(7, 2000, 100, 0.9, 40, 170)
-    clr.Farberkennung(140, 179, 50, 255, 50, 255)
-    cst.Kontrasterkennung(100, 255, 5, 3, 1000, 50000)
-    de.Tiefenerkennung(1, 2000, 100, 0.9, 40, 170)
+    sn.Unbekannt()
 
 else:
     print("Bitte wählen Sie eine gültige Methode aus...")
