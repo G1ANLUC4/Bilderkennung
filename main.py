@@ -3,11 +3,11 @@ import color as clr
 import contrast as cst
 import depth_estimation as de
 import mobilenetki as ki
-import snippets as sn
+import matching as tm
 
 # Hinweis: Die Ausführung des Codes kann mit Drücken der Taste "0" beendet werden.
 # Hier Methodenauswahl über Änderung des int-Wertes: (Legende siehe unten)
-Methode = 5
+Methode = 1
 
 if Methode == 1:
     print("HoughCircles")
@@ -78,8 +78,13 @@ elif Methode == 5:
     # Quelle: https://electreeks.de/project/exkurs-in-die-ki-bilderkennung-objekterkennung-mit-opencv-und-mobilenet/
 
 elif Methode == 6:
-    print("Unbekannt Methode")
-    sn.Unbekannt()
+    print("Tamplate-Matching")
+    tm.TemplateMatching(0.67)
+    # Parameter hierbei sind:
+
+    # Aufloesung        -->     Verhältnis der Überdeckung zwischen Vorlagenfoto und Videoframe
+
+    # Quelle: https://docs.opencv.org/4.x/d4/dc6/tutorial_py_template_matching.html
 
 else:
     print("Bitte wählen Sie eine gültige Methode aus...")

@@ -26,7 +26,7 @@ def Farberkennung(MinWinkel, MaxWinkel, MinSaettigung, MaxSaettigung, MinHelligk
         cv.circle(img, (int(center[1]), int(center[0])), 1, (0, 0, 0), 5)               # Zeichnen des Zentrums
         print(int(center[1]), int(center[0]))                                           # Ausgabe der x und y Koordinate
 
-        cv.imshow('Farberkennung', img)           # Anzeigen des Bildes auf Monitor, zur Überwachung
+        cv.imshow('Farberkennung', img)         # Anzeigen des Bildes auf Monitor, zur Überwachung
         cv.imshow('HSV-Farbskala', hsv)         # Anzeige des Bildes im HSV-Farbraum
         cv.imshow('Maske', maske)               # Anzeigen der Maske
         cv.imshow('Angewandte Maske', kombi)    # Anzeigen des zusammengesetzten Bildes

@@ -2,7 +2,7 @@ def Tiefenerkennung(Aufloesung, Mindestabstand, Kantenwert, Rundheit, MinRadius,
 
     import numpy as np
     import cv2 as cv
-    model = cv.dnn.readNet("model-small.onnx")
+    model = cv.dnn.readNet('models/model-small.onnx')
 
     model.setPreferableBackend(cv.dnn.DNN_BACKEND_CUDA)     # Auswahl der GPU als Rechenort
     model.setPreferableTarget(cv.dnn.DNN_TARGET_CUDA)       # Auswahl der GPU als Rechenort

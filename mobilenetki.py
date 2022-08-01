@@ -63,8 +63,6 @@ def KuenstlicheIntelligenz():
                 cv.putText(img, class_name, (int(box_x), int(box_y + .005 * hoehe)),
                            cv.FONT_HERSHEY_SIMPLEX, (.0005 * breite), (0, 0, 255))  # putting text
 
-        cv.imshow('image', img)
-
         cv.imshow('Erkennungsabbild', img)  # Anzeigen des Bildes auf Monitor, zur Überwachung
 
         if cv.waitKey(1) == ord("0"):  # Abbruchbedingung der Schleife festgelegt als Knopfdruck 0
