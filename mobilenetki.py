@@ -1,5 +1,6 @@
 def KuenstlicheIntelligenz():
 
+    # Zuweisung der KI-Klassen mit Namen
     objectsnames = {0: 'background',
                     1: 'person', 2: 'bicycle', 3: 'car', 4: 'motorcycle', 5: 'airplane', 6: 'bus',
                     7: 'train', 8: 'truck', 9: 'boat', 10: 'traffic light', 11: 'fire hydrant',
@@ -20,53 +21,58 @@ def KuenstlicheIntelligenz():
 
     import cv2 as cv
 
+    # Auswahl der verwendeten KI-Modelle
     model = cv.dnn.readNetFromTensorflow('models/frozen_inference_graph.pb',
                                          'models/ssd_mobilenet_v2_coco_2018_03_29.pbtxt')
 
     cam = cv.VideoCapture(1)            # Auswahl der Kamera, wobei 0 --> Innenkamera und 1 --> Außenkamera
     cam.set(cv.CAP_PROP_BUFFERSIZE, 1)  # Verarbeitungszeit maximal 1ms
 
-    while True:  # While-Schleife, damit das Programm per Knopfdruck geschlossen werden kann
+    while True:                         # While-Schleife, damit das Programm per Knopfdruck geschlossen werden kann
 
-        _, img = cam.read()  # Auslesen der Kamera
-        # img = img[100:200, 100:200]                       # Zuschneiden des Bildes
-        hoehe, breite, farbe = img.shape  # Auslesen der Maße für später
+        _, img = cam.read()                 # Auslesen der Kamera
+        # img = img[100:200, 100:200]       # Zuschneiden des Bildes
+        hoehe, breite, farbe = img.shape    # Auslesen der Maße für später
 
-        blob = cv.dnn.blobFromImage(img, size=(hoehe, breite), swapRB=True)  # Erstellen des blobs in rgb
-        model.setInput(blob)
+        blob = cv.dnn.blobFromImage(img, size=(hoehe, breite), swapRB=True)     # Erstellen des blobs in rgb
+        model.setInput(blob)                                                    # Anwenden des lobs in KI
 
-        print("First Blob: {}".format(blob.shape))
+        print("First Blob: {}".format(blob.shape))          # Ausgabe des zuerst erkannten blobs in Konsole
 
         def id_Object_class(classid, classes):
             for key_id, classname in classes.items():
                 if classid == key_id:
-                    return classname
+                    return classname                        # Erstellen des Klassennamens laut KI
 
-        output = model.forward()
-        # print(output[0,0,:,:])
-        # print(output)
-        for detection in output[0, 0, :, :]:
-            confidence = detection[2]  # confidence for occuring a class
-            # print(detection[2])
-            if confidence > .35:  # threshold
-                class_id = detection[1]
-                # print(detection[1])
-                class_name = id_Object_class(class_id, objectsnames)  # calling id_Object_class function
-                print(str(str(class_id) + " " + str(detection[2]) + " " + class_name))
-                box_x = detection[3] * breite
+        output = model.forward()                            # Ausgabe der KI-Ergebnisse
+
+        for detection in output[0, 0, :, :]:                # Jedes erkannte Objekt wird nun verarbeitet
+            confidence = detection[2]                       # Zwischenspeicherung der Wahrscheinlichkeit laut KI
+            if confidence > .35:                            # Wenn die Wahrscheinlichkeit/Sicherheit der KI über 35 %
+                class_id = detection[1]                     # wird der Objektname weitergegeben
+                class_name = id_Object_class(class_id, objectsnames)  # Zuweisung der Klasse zum passenden Namen (s. o.)
+
+                print(str(str(class_id) + " " + str(detection[2]) + " " + class_name)) # Konsolenausgabe
+
+                box_x = detection[3] * breite           # Vorbereitungen für Zeichnung der Rechtecke in Ausgabebild
                 box_y = detection[4] * hoehe
                 box_width = detection[5] * breite
                 box_height = detection[6] * hoehe
-                cv.rectangle(img, (int(box_x), int(box_y)), (int(box_width),
-                                                             int(box_height)), (23, 230, 210),
-                             thickness=1)  # drawing triangle
-                cv.putText(img, class_name, (int(box_x), int(box_y + .005 * hoehe)),
-                           cv.FONT_HERSHEY_SIMPLEX, (.0005 * breite), (0, 0, 255))  # putting text
 
-        cv.imshow('Erkennungsabbild', img)  # Anzeigen des Bildes auf Monitor, zur Überwachung
+                cv.rectangle(img, (int(box_x), int(box_y)),         # Zeichnen der Rechtecke in das Kamerabild
+                             (int(box_width), int(box_height)),
+                             (23, 230, 210),
+                             thickness=1)
 
-        if cv.waitKey(1) == ord("0"):  # Abbruchbedingung der Schleife festgelegt als Knopfdruck 0
+                cv.putText(img, class_name,                         # Beschriften des Rechtecks mit Name der Klasse
+                           (int(box_x), int(box_y + .005 * hoehe)),
+                           cv.FONT_HERSHEY_SIMPLEX,
+                           (.0005 * breite), (0, 0, 255))
+
+        cv.imshow('Erkennungsabbild', img)      # Anzeigen des Bildes auf Monitor, zur Überwachung
+
+        if cv.waitKey(1) == ord("0"):   # Abbruchbedingung der Schleife festgelegt als Knopfdruck 0
             break
 
-    cam.release()  # Freigeben der Kamera für andere Zwecke
-    cv.destroyAllWindows()  # Schließen aller Fenster, die durch Anwendung geöffnet wurden.
+    cam.release()                       # Freigeben der Kamera für andere Zwecke
+    cv.destroyAllWindows()              # Schließen aller Fenster, die durch Anwendung geöffnet wurden.

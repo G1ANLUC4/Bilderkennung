@@ -31,16 +31,17 @@ def Kontrasterkennung(Untergrenze, Obergrenze, Ordnung, Iterationen, MinFlaeche,
             kontur = kontur[1]
 
         for c in kontur:
-            peri = cv.arcLength(c, True)
-            approx = cv.approxPolyDP(c, 0.1 * peri, True)
-            area = cv.contourArea(c)
-            if len(approx) > 3 and MinFlaeche < area < MaxFlaeche:
+            peri = cv.arcLength(c, True)                        # Abweichen von erkannter Kontur zur Eingabe-Matrix
+            approx = cv.approxPolyDP(c, 0.1 * peri, True)       # Genauigkeit der Kontur
+            area = cv.contourArea(c)                            # Fläche der erkannten Kontur
+
+            if len(approx) > 3 and MinFlaeche < area < MaxFlaeche:              # Beurteilung des Kreises
                 ((x, y), r) = cv.minEnclosingCircle(c)
                 cv.circle(img, (int(x), int(y)), int(r), (255, 0, 0), 5)        # Zeichnen des Kreises
                 cv.circle(img, (int(x), int(y)), 1, (0, 0, 0), 5)               # Zeichnen des Zentrums
                 print(int(x), int(y))
 
-        cv.imshow('Kontrastsuche', img)               # Anzeigen des Bildes auf Monitor, zur Überwachung
+        cv.imshow('Kontrastsuche', img)             # Anzeigen des Bildes auf Monitor, zur Überwachung
         cv.imshow('circles detected', grau)         # Anzeigen des Graustufenbildes
         cv.imshow('verschwommen', verschwommen)     # Anzeigen des verschwommenen Bildes
         cv.imshow('Thresh-Analyse', thresh)         # Anzeigen des Analyse-Ergebnisses

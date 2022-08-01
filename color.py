@@ -20,8 +20,8 @@ def Farberkennung(MinWinkel, MaxWinkel, MinSaettigung, MaxSaettigung, MinHelligk
         maske = cv.inRange(hsv, untergrenze, obergrenze)    # Zusammensetzung der Maskenbedingungen
         kombi = cv.bitwise_and(img, img, mask=maske)        # Anwenden der Maske auf farbiges Bild
 
-        points = np.argwhere(maske > 0)                     # Auslesen der
-        center, radius = cv.minEnclosingCircle(points)
+        points = np.argwhere(maske > 0)                     # Auslesen der Punkte, die sich von 0/schwarz unterschieden
+        center, radius = cv.minEnclosingCircle(points)      # Kreiszeichnung um die gefilterten Pixel
         cv.circle(img, (int(center[1]), int(center[0])), int(radius), (255, 0, 0), 5)   # Zeichnen des Kreises
         cv.circle(img, (int(center[1]), int(center[0])), 1, (0, 0, 0), 5)               # Zeichnen des Zentrums
         print(int(center[1]), int(center[0]))                                           # Ausgabe der x und y Koordinate
