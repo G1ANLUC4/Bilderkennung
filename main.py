@@ -8,10 +8,11 @@ import matching as tm
 # Hinweis: Die Ausführung des Codes kann mit Drücken der Taste "0" beendet werden.
 # Hier Methodenauswahl über Änderung des int-Wertes: (Legende siehe unten)
 Methode = 1
+Cam = 1
 
 if Methode == 1:
     print("HoughCircles")
-    hc.Kreiserkennung(7, 2000, 100, 0.9, 40, 170)
+    hc.Kreiserkennung(Cam, 7, 2000, 100, 0.9, 40, 170)
     # Parameter hierbei sind:
 
     # Aufloesung        -->     Verhältnis zwischen Framerate und Algorithmus-Durchführung
@@ -25,7 +26,7 @@ if Methode == 1:
 
 elif Methode == 2:
     print("ColorRecognition")
-    clr.Farberkennung(140, 179, 50, 255, 50, 255)
+    clr.Farberkennung(Cam, 140, 179, 50, 255, 50, 255)
     # Parameter hierbei sind:
 
     # MinWinkel         -->     Unterer Winkel der Farbe im HSV-Modell, ab dem gesucht wird
@@ -39,7 +40,7 @@ elif Methode == 2:
 
 elif Methode == 3:
     print("Kontrasterkennung")
-    cst.Kontrasterkennung(100, 255, 5, 3, 1000, 50000)
+    cst.Kontrasterkennung(Cam, 100, 255, 5, 3, 1000, 50000)
     # Parameter hierbei sind:
 
     # Untergrenze       -->     unterer Grenzwert, ab dem ein Pixel weiß dargestellt wird
@@ -58,7 +59,7 @@ elif Methode == 3:
 
 elif Methode == 4:
     print("Tiefenerkennung")
-    de.Tiefenerkennung(1, 2000, 100, 0.9, 40, 170)
+    de.Tiefenerkennung(Cam, 1, 2000, 100, 0.9, 40, 170)
     # Parameter hierbei sind:
 
     # Aufloesung        -->     Verhältnis zwischen Framerate und Algorithmus-Durchführung
@@ -73,13 +74,13 @@ elif Methode == 4:
 
 elif Methode == 5:
     print("Mobilenet-KI")
-    ki.KuenstlicheIntelligenz()
+    ki.KuenstlicheIntelligenz(Cam)
 
     # Quelle: https://electreeks.de/project/exkurs-in-die-ki-bilderkennung-objekterkennung-mit-opencv-und-mobilenet/
 
 elif Methode == 6:
     print("Tamplate-Matching")
-    tm.TemplateMatching(0.67)
+    tm.TemplateMatching(Cam, 0.67)
     # Parameter hierbei sind:
 
     # Aufloesung        -->     Verhältnis der Überdeckung zwischen Vorlagenfoto und Videoframe

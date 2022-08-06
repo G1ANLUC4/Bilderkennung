@@ -1,9 +1,9 @@
-def Kreiserkennung(Aufloesung, Mindestabstand, Kantenwert, Rundheit, MinRadius, MaxRadius):
+def Kreiserkennung(Kamera, Aufloesung, Mindestabstand, Kantenwert, Rundheit, MinRadius, MaxRadius):
 
     import cv2 as cv
     import numpy as np
 
-    cam = cv.VideoCapture(1)                # Auswahl der Kamera, wobei 0 --> Innenkamera und 1 --> Außenkamera
+    cam = cv.VideoCapture(Kamera)                # Auswahl der Kamera, wobei 0 --> Innenkamera und 1 --> Außenkamera
     cam.set(cv.CAP_PROP_BUFFERSIZE, 1)      # Verarbeitungszeit maximal 1ms
 
     while True:                 # While-Schleife, damit das Programm per Knopfdruck geschlossen werden kann

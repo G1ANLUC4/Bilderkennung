@@ -1,4 +1,4 @@
-def Tiefenerkennung(Aufloesung, Mindestabstand, Kantenwert, Rundheit, MinRadius, MaxRadius):
+def Tiefenerkennung(Kamera, Aufloesung, Mindestabstand, Kantenwert, Rundheit, MinRadius, MaxRadius):
 
     import numpy as np
     import cv2 as cv
@@ -8,7 +8,7 @@ def Tiefenerkennung(Aufloesung, Mindestabstand, Kantenwert, Rundheit, MinRadius,
     model.setPreferableBackend(cv.dnn.DNN_BACKEND_CUDA)     # Auswahl der GPU als Rechenort
     model.setPreferableTarget(cv.dnn.DNN_TARGET_CUDA)       # Auswahl der GPU als Rechenort
 
-    cam = cv.VideoCapture(1)                # Auswahl der Kamera, wobei 0 --> Innenkamera und 1 --> Außenkamera
+    cam = cv.VideoCapture(Kamera)                # Auswahl der Kamera, wobei 0 --> Innenkamera und 1 --> Außenkamera
     # cam.set(cv.CAP_PROP_BUFFERSIZE, 1)    # Verarbeitungszeit maximal 1ms
 
     while True:                             # While-Schleife, damit das Programm per Knopfdruck geschlossen werden kann

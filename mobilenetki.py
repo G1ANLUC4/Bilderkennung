@@ -1,4 +1,4 @@
-def KuenstlicheIntelligenz():
+def KuenstlicheIntelligenz(Kamera):
 
     # Zuweisung der KI-Klassen mit Namen
     objectsnames = {0: 'background',
@@ -25,7 +25,7 @@ def KuenstlicheIntelligenz():
     model = cv.dnn.readNetFromTensorflow('models/frozen_inference_graph.pb',
                                          'models/ssd_mobilenet_v2_coco_2018_03_29.pbtxt')
 
-    cam = cv.VideoCapture(1)            # Auswahl der Kamera, wobei 0 --> Innenkamera und 1 --> Außenkamera
+    cam = cv.VideoCapture(Kamera)            # Auswahl der Kamera, wobei 0 --> Innenkamera und 1 --> Außenkamera
     cam.set(cv.CAP_PROP_BUFFERSIZE, 1)  # Verarbeitungszeit maximal 1ms
 
     while True:                         # While-Schleife, damit das Programm per Knopfdruck geschlossen werden kann
