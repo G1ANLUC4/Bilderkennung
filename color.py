@@ -3,7 +3,7 @@ def Farberkennung(Kamera, MinWinkel, MaxWinkel, MinSaettigung, MaxSaettigung, Mi
     import cv2 as cv
     import numpy as np
 
-    cam = cv.VideoCapture(Kamera)            # Auswahl der Kamera, wobei 0 --> Innenkamera und 1 --> Außenkamera
+    cam = cv.VideoCapture(Kamera)       # Aufruf der Kamera
     cam.set(cv.CAP_PROP_BUFFERSIZE, 1)  # Verarbeitungszeit maximal 1ms
 
     while True:                 # While-Schleife, damit das Programm per Knopfdruck geschlossen werden kann

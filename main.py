@@ -6,8 +6,11 @@ import mobilenetki as ki
 import matching as tm
 
 # Hinweis: Die Ausführung des Codes kann mit Drücken der Taste "0" beendet werden.
+
 # Hier Methodenauswahl über Änderung des int-Wertes: (Legende siehe unten)
 Methode = 1
+
+# Auswahl der Kamera, wobei 0 --> Innenkamera und 1 --> Außenkamera
 Cam = 1
 
 if Methode == 1:

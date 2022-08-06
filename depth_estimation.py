@@ -8,7 +8,7 @@ def Tiefenerkennung(Kamera, Aufloesung, Mindestabstand, Kantenwert, Rundheit, Mi
     model.setPreferableBackend(cv.dnn.DNN_BACKEND_CUDA)     # Auswahl der GPU als Rechenort
     model.setPreferableTarget(cv.dnn.DNN_TARGET_CUDA)       # Auswahl der GPU als Rechenort
 
-    cam = cv.VideoCapture(Kamera)                # Auswahl der Kamera, wobei 0 --> Innenkamera und 1 --> Außenkamera
+    cam = cv.VideoCapture(Kamera)           # Aufruf der Kamera
     # cam.set(cv.CAP_PROP_BUFFERSIZE, 1)    # Verarbeitungszeit maximal 1ms
 
     while True:                             # While-Schleife, damit das Programm per Knopfdruck geschlossen werden kann

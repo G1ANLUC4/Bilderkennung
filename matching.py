@@ -6,7 +6,7 @@ def TemplateMatching(Kamera, Aufloesung):
     template = cv.imread('Fotos/Ballfoto3.png', 0)      # Öffnen des Vorlagebildes
     cv.imshow("Vorgabe", template)                      # Anzeigen der Vorlage mittels der gesucht wird
 
-    cam = cv.VideoCapture(Kamera)                # Auswahl der Kamera, wobei 0 --> Innenkamera und 1 --> Außenkamera
+    cam = cv.VideoCapture(Kamera)           # Aufruf der Kamera
     # cam.set(cv.CAP_PROP_BUFFERSIZE, 1)    # Verarbeitungszeit maximal 1ms
 
     while True:                 # While-Schleife, damit das Programm per Knopfdruck geschlossen werden kann

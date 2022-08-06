@@ -25,7 +25,7 @@ def KuenstlicheIntelligenz(Kamera):
     model = cv.dnn.readNetFromTensorflow('models/frozen_inference_graph.pb',
                                          'models/ssd_mobilenet_v2_coco_2018_03_29.pbtxt')
 
-    cam = cv.VideoCapture(Kamera)            # Auswahl der Kamera, wobei 0 --> Innenkamera und 1 --> Außenkamera
+    cam = cv.VideoCapture(Kamera)       # Aufruf der Kamera
     cam.set(cv.CAP_PROP_BUFFERSIZE, 1)  # Verarbeitungszeit maximal 1ms
 
     while True:                         # While-Schleife, damit das Programm per Knopfdruck geschlossen werden kann
