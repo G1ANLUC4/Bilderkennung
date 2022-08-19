@@ -4,11 +4,12 @@ import contrast as cst
 import depth_estimation as de
 import mobilenetki as ki
 import matching as tm
+import Testlauf as tl
 
 # Hinweis: Die Ausführung des Codes kann mit Drücken der Taste "0" beendet werden.
 
 # Hier Methodenauswahl über Änderung des int-Wertes: (Legende siehe unten)
-Methode = 1
+Methode = 7
 
 # Auswahl der Kamera, wobei 0 --> Innenkamera und 1 --> Außenkamera
 Cam = 1
@@ -57,8 +58,7 @@ elif Methode == 3:
     # Quelle: https://docs.opencv.org/4.x/d7/d1b/group__imgproc__misc.html#gae8a4a146d1ca78c626a53577199e9c57
     # Quelle: https://www.wenglor.com/de/Threshold/l/cxmCID148434
     # Quelle: https://docs.opencv.org/3.4/d3/dc0/group__imgproc__shape.html#ga17ed9f5d79ae97bd4c7cf18403e1689a
-    # Quelle: https://opencv24-python-tutorials.readthedocs.io/en/latest/
-    #         py_tutorials/py_imgproc/py_morphological_ops/py_morphological_ops.html
+    # Quelle: https://opencv24-python-tutorials.readthedocs.io/en/latest/py_tutorials/py_imgproc/py_morphological_ops/py_morphological_ops.html
 
 elif Methode == 4:
     print("Tiefenerkennung")
@@ -89,6 +89,10 @@ elif Methode == 6:
     # Aufloesung        -->     Verhältnis der Überdeckung zwischen Vorlagenfoto und Videoframe
 
     # Quelle: https://docs.opencv.org/4.x/d4/dc6/tutorial_py_template_matching.html
+
+elif Methode == 7:
+    print("Testlauf")
+    tl.Kreiserkennung(7, 2000, 100, 0.9, 40, 170)
 
 else:
     print("Bitte wählen Sie eine gültige Methode aus...")
