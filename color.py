@@ -6,10 +6,10 @@ def Farberkennung(Kamera, MinWinkel, MaxWinkel, MinSaettigung, MaxSaettigung, Mi
     cam = cv.VideoCapture(Kamera)       # Aufruf der Kamera
     cam.set(cv.CAP_PROP_BUFFERSIZE, 1)  # Verarbeitungszeit maximal 1ms
 
-    while True:                 # While-Schleife, damit das Programm per Knopfdruck geschlossen werden kann
+    while True:                         # While-Schleife, damit das Programm per Knopfdruck geschlossen werden kann
 
         _, img = cam.read()                                 # Auslesen der Kamera
-        # img = img[100:200, 100:200]                       # Zuschneiden des Bildes
+        img = img[250:200, 100:500]                         # Zuschneiden des Bildes
 
         hsv = cv.cvtColor(img, cv.COLOR_BGR2HSV)            # Konvertierung in HSV-Farbraum
 
@@ -22,16 +22,18 @@ def Farberkennung(Kamera, MinWinkel, MaxWinkel, MinSaettigung, MaxSaettigung, Mi
 
         points = np.argwhere(maske > 0)                     # Auslesen der Punkte, die sich von 0/schwarz unterschieden
         center, radius = cv.minEnclosingCircle(points)      # Kreiszeichnung um die gefilterten Pixel
-        cv.circle(img, (int(center[1]), int(center[0])), int(radius), (255, 0, 0), 5)   # Zeichnen des Kreises
-        cv.circle(img, (int(center[1]), int(center[0])), 1, (0, 0, 0), 5)               # Zeichnen des Zentrums
-        print(int(center[1]), int(center[0]))                                           # Ausgabe der x und y Koordinate
+        cv.circle(img, (int(center[1]), int(center[0])), int(radius), (255, 0, 0), 2)   # Zeichnen des Kreises
+        cv.circle(img, (int(center[1]), int(center[0])), 1, (0, 0, 0), 2)               # Zeichnen des Zentrums
+
+        skala = (center[0]-203)*(40/185)        # Umskalieren von Pixel in cm
+        print(skala)                            # Ausgabe der x-Koordinate
 
         cv.imshow('Farberkennung', img)         # Anzeigen des Bildes auf Monitor, zur Überwachung
         cv.imshow('HSV-Farbskala', hsv)         # Anzeige des Bildes im HSV-Farbraum
         cv.imshow('Maske', maske)               # Anzeigen der Maske
         cv.imshow('Angewandte Maske', kombi)    # Anzeigen des zusammengesetzten Bildes
 
-        if cv.waitKey(1) == ord("0"):       # Abbruchbedingung der Schleife festgelegt als Knopfdruck 0
+        if cv.waitKey(1) == ord("0"):           # Abbruchbedingung der Schleife festgelegt als Knopfdruck 0
             break
 
     cam.release()               # Freigeben der Kamera für andere Zwecke

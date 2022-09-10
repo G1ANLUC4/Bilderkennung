@@ -6,16 +6,17 @@ def Kreiserkennung(Kamera, Aufloesung, Mindestabstand, Kantenwert, Rundheit, Min
     cam = cv.VideoCapture(Kamera)           # Aufruf der Kamera
     cam.set(cv.CAP_PROP_BUFFERSIZE, 1)      # Verarbeitungszeit maximal 1ms
 
-    while True:                 # While-Schleife, damit das Programm per Knopfdruck geschlossen werden kann
+    while True:                             # While-Schleife, damit das Programm per Knopfdruck geschlossen werden kann
 
         _, img = cam.read()                                 # Auslesen der Kamera
-        # img = img[100:200, 100:200]                       # Zuschneiden des Bildes
+        img = img[200:250, 100:500]                         # Zuschneiden des Bildes
 
         grau = cv.cvtColor(img, cv.COLOR_BGR2GRAY)          # Konvertierung in Graustufen
-        blurr = cv.bilateralFilter(grau, 10, 50, 50)        # Verschwimmen des Bildes
+        blurr = cv.bilateralFilter(grau, 7, 60, 80)         # Verschwimmen des Bildes
         kanten = cv.Canny(grau, 30, 100)                    # Ausgabe des Canny-Algs, ähnlich wie in HoughCircles
 
-        circles = cv.HoughCircles(blurr, cv.HOUGH_GRADIENT,                     # Anwendung der HoughCircles Funktion
+        # Anwendung der HoughCircles Funktion
+        circles = cv.HoughCircles(blurr, cv.HOUGH_GRADIENT,
                                   Aufloesung, Mindestabstand,
                                   param1=Kantenwert, param2=Rundheit,
                                   minRadius=MinRadius, maxRadius=MaxRadius)
@@ -24,14 +25,16 @@ def Kreiserkennung(Kamera, Aufloesung, Mindestabstand, Kantenwert, Rundheit, Min
             circles = np.uint16(np.around(circles))                     # Konvertieren der erkannten Kreise in U-Int
             for i in circles[0, :]:                                     # Auslesen der Kreiszentren
                 # Bild, Zentrum, Radius, Farbe in RGB, Dicke
-                cv.circle(img, (i[0], i[1]), i[2], (255, 0, 0), 5)      # Zeichnen des Kreises
-                cv.circle(img, (i[0], i[1]), 1, (0, 0, 0), 5)           # Zeichnen des Zentrums
-                print(i[0], i[1])                                       # Ausgabe der x und y Koordinate
+                cv.circle(img, (i[0], i[1]), i[2], (255, 0, 0), 2)      # Zeichnen des Kreises
+                cv.circle(img, (i[0], i[1]), 1, (0, 0, 0), 2)           # Zeichnen des Zentrums
+
+                skala = (i[0]-203)*(40/185)                             # Umskalieren von Pixel in cm
+                print(skala)                                            # Ausgabe der x-Koordinate
 
         cv.imshow('Kreiserkennung', img)        # Anzeigen des Bildes auf Monitor, zur Überwachung
-        cv.imshow('Graustufen', grau)           # Anzeigen des Graustufenbildes
-        cv.imshow('Bilateral', blurr)           # Anzeigen des verschwommenen Bildes
-        cv.imshow('Kantenerkennung', kanten)    # Anzeigen des Kantenbildes
+        cv.imshow('Graustufen',     grau)       # Anzeigen des Graustufenbildes
+        cv.imshow('Bilateral',      blurr)      # Anzeigen des verschwommenen Bildes
+        cv.imshow('Kantenaufnahme', kanten)     # Anzeigen des Kantenbildes
 
         if cv.waitKey(1) == ord("0"):           # Abbruchbedingung der Schleife festgelegt als Knopfdruck 0
             break

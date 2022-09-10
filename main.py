@@ -53,10 +53,7 @@ elif Methode == 3:
 
 elif Methode == 4:
     print("Tamplate-Matching")
-    tm.TemplateMatching(Cam, 0.67)
-
-    # Parameter hierbei sind:
-    # Aufloesung        -->     Verhältnis der Überdeckung zwischen Vorlagenfoto und Videoframe
+    tm.TemplateMatching(Cam)
 
 elif Methode == 5:
     print("Tiefenerkennung")

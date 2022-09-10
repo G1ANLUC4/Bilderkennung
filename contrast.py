@@ -6,10 +6,10 @@ def Kontrasterkennung(Kamera, Untergrenze, Obergrenze, Ordnung, Iterationen, Min
     cam = cv.VideoCapture(Kamera)       # Aufruf der Kamera
     cam.set(cv.CAP_PROP_BUFFERSIZE, 1)  # Verarbeitungszeit maximal 1ms
 
-    while True:                 # While-Schleife, damit das Programm per Knopfdruck geschlossen werden kann
+    while True:                         # While-Schleife, damit das Programm per Knopfdruck geschlossen werden kann
 
         _, img = cam.read()                                 # Auslesen der Kamera
-        # img = img[100:200, 100:200]                       # Zuschneiden des Bildes
+        img = img[200:250, 100:500]                         # Zuschneiden des Bildes
 
         src_img = img.astype(np.uint8)                      # Umformatieren des Bildes für OTSU-Threshold
         grau = cv.cvtColor(src_img, cv.COLOR_BGR2GRAY)      # Umwandeln in Graustufen
@@ -37,9 +37,11 @@ def Kontrasterkennung(Kamera, Untergrenze, Obergrenze, Ordnung, Iterationen, Min
 
             if len(approx) > 3 and MinFlaeche < area < MaxFlaeche:              # Beurteilung des Kreises
                 ((x, y), r) = cv.minEnclosingCircle(c)
-                cv.circle(img, (int(x), int(y)), int(r), (255, 0, 0), 5)        # Zeichnen des Kreises
-                cv.circle(img, (int(x), int(y)), 1, (0, 0, 0), 5)               # Zeichnen des Zentrums
-                print(int(x), int(y))
+                cv.circle(img, (int(x), int(y)), int(r), (255, 0, 0), 2)        # Zeichnen des Kreises
+                cv.circle(img, (int(x), int(y)), 1, (0, 0, 0), 2)               # Zeichnen des Zentrums
+
+                skala = (int(x)-203)*(40/185)       # Umskalieren von Pixel in cm
+                print(skala)                        # Ausgabe der x-Koordinate
 
         cv.imshow('Kontrastsuche', img)             # Anzeigen des Bildes auf Monitor, zur Überwachung
         cv.imshow('circles detected', grau)         # Anzeigen des Graustufenbildes
@@ -47,7 +49,7 @@ def Kontrasterkennung(Kamera, Untergrenze, Obergrenze, Ordnung, Iterationen, Min
         cv.imshow('Thresh-Analyse', thresh)         # Anzeigen des Analyse-Ergebnisses
         cv.imshow('opening', ergebnis)              # Anzeigen nach Durchlauf der Bit-Maske
 
-        if cv.waitKey(1) == ord("0"):       # Abbruchbedingung der Schleife festgelegt als Knopfdruck 0
+        if cv.waitKey(1) == ord("0"):               # Abbruchbedingung der Schleife festgelegt als Knopfdruck 0
             break
 
     cam.release()               # Freigeben der Kamera für andere Zwecke

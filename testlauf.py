@@ -3,30 +3,26 @@ def Kreiserkennung(Aufloesung, Mindestabstand, Kantenwert, Rundheit, MinRadius, 
     import cv2 as cv
     import numpy as np
 
-    template = cv.imread('C:\\Users\\giann\\PycharmProjects\\Projektarbeit\\Fotos\\Testbild.png', 0)   # Öffnen des Vorlagebildes
-    cv.imshow("Vorgabe", template)                  # Anzeigen der Vorlage
+    template = cv.imread('C:\\Users\\giann\\PycharmProjects\\Projektarbeit\\Fotos\\Testbild.png', 0)
+    cv.imshow("Vorgabe", template)
 
-    while True:                 # While-Schleife, damit das Programm per Knopfdruck geschlossen werden kann
+    while True:
 
-        #grau = cv.cvtColor(template, cv.COLOR_BGR2GRAY)     # Konvertierung in Graustufen
-
-        circles = cv.HoughCircles(template, cv.HOUGH_GRADIENT,                     # Anwendung der HoughCircles Funktion
+        circles = cv.HoughCircles(template, cv.HOUGH_GRADIENT,
                                   Aufloesung, Mindestabstand,
                                   param1=Kantenwert, param2=Rundheit,
                                   minRadius=MinRadius, maxRadius=MaxRadius)
 
         if circles is not None:
-            circles = np.uint16(np.around(circles))                     # Konvertieren der erkannten Kreise in U-Int
-            for i in circles[0, :]:                                     # Auslesen der Kreiszentren
-                # Bild, Zentrum, Radius, Farbe in RGB, Dicke
-                cv.circle(template, (i[0], i[1]), i[2], (255, 0, 0), 5)      # Zeichnen des Kreises
-                cv.circle(template, (i[0], i[1]), 1, (0, 0, 0), 5)           # Zeichnen des Zentrums
-                print(i[0], i[1])                                       # Ausgabe der x und y Koordinate
+            circles = np.uint16(np.around(circles))
+            for i in circles[0, :]:
+                cv.circle(template, (i[0], i[1]), i[2], (255, 0, 0), 5)
+                cv.circle(template, (i[0], i[1]), 1, (0, 0, 0), 5)
+                print(i[0], i[1])
 
-        cv.imshow('Kreiserkennung', template)        # Anzeigen des Bildes auf Monitor, zur Überwachung
-        #cv.imshow('Graustufen', grau)           # Anzeigen des Graustufenbildes
+        cv.imshow('Kreiserkennung', template)
 
-        if cv.waitKey(1) == ord("0"):           # Abbruchbedingung der Schleife festgelegt als Knopfdruck 0
+        if cv.waitKey(1) == ord("0"):
             break
 
-    cv.destroyAllWindows()      # Schließen aller Fenster, die durch Anwendung geöffnet wurden.
+    cv.destroyAllWindows()

@@ -31,7 +31,7 @@ def KuenstlicheIntelligenz(Kamera):
     while True:                         # While-Schleife, damit das Programm per Knopfdruck geschlossen werden kann
 
         _, img = cam.read()                 # Auslesen der Kamera
-        # img = img[100:200, 100:200]       # Zuschneiden des Bildes
+        img = img[200:250, 100:500]         # Zuschneiden des Bildes
         hoehe, breite, farbe = img.shape    # Auslesen der Maße für später
 
         blob = cv.dnn.blobFromImage(img, size=(hoehe, breite), swapRB=True)     # Erstellen des blobs in rgb
@@ -52,7 +52,7 @@ def KuenstlicheIntelligenz(Kamera):
                 class_id = detection[1]                     # wird der Objektname weitergegeben
                 class_name = id_Object_class(class_id, objectsnames)  # Zuweisung der Klasse zum passenden Namen (s. o.)
 
-                print(str(str(class_id) + " " + str(detection[2]) + " " + class_name)) # Konsolenausgabe
+                print(str(str(class_id) + " " + str(detection[2]) + " " + class_name))  # Konsolenausgabe
 
                 box_x = detection[3] * breite           # Vorbereitungen für Zeichnung der Rechtecke in Ausgabebild
                 box_y = detection[4] * hoehe
@@ -71,8 +71,8 @@ def KuenstlicheIntelligenz(Kamera):
 
         cv.imshow('Erkennungsabbild', img)      # Anzeigen des Bildes auf Monitor, zur Überwachung
 
-        if cv.waitKey(1) == ord("0"):   # Abbruchbedingung der Schleife festgelegt als Knopfdruck 0
+        if cv.waitKey(1) == ord("0"):           # Abbruchbedingung der Schleife festgelegt als Knopfdruck 0
             break
 
-    cam.release()                       # Freigeben der Kamera für andere Zwecke
-    cv.destroyAllWindows()              # Schließen aller Fenster, die durch Anwendung geöffnet wurden.
+    cam.release()               # Freigeben der Kamera für andere Zwecke
+    cv.destroyAllWindows()      # Schließen aller Fenster, die durch Anwendung geöffnet wurden.

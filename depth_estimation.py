@@ -3,10 +3,8 @@ def Tiefenerkennung(Kamera, Aufloesung, Mindestabstand, Kantenwert, Rundheit, Mi
     import numpy as np
     import cv2 as cv
 
-    model = cv.dnn.readNet('C:\\Users\\giann\\PycharmProjects\\Projektarbeit\\models\\model-small.onnx')       # Auswahl des KI-Modells
-
-    #model.setPreferableBackend(cv.dnn.DNN_BACKEND_CUDA)     # Auswahl der GPU als Rechenort
-    #model.setPreferableTarget(cv.dnn.DNN_TARGET_CUDA)       # Auswahl der GPU als Rechenort
+    # Auswahl des KI-Modells
+    model = cv.dnn.readNet('C:\\Users\\giann\\PycharmProjects\\Projektarbeit\\models\\model-small.onnx')
 
     cam = cv.VideoCapture(Kamera)           # Aufruf der Kamera
     # cam.set(cv.CAP_PROP_BUFFERSIZE, 1)    # Verarbeitungszeit maximal 1ms
@@ -14,15 +12,16 @@ def Tiefenerkennung(Kamera, Aufloesung, Mindestabstand, Kantenwert, Rundheit, Mi
     while True:                             # While-Schleife, damit das Programm per Knopfdruck geschlossen werden kann
 
         _, img = cam.read()                 # Auslesen der Kamera
-        # img = img[100:200, 100:200]       # Zuschneiden des Bildes
+        img = img[200:250, 100:500]         # Zuschneiden des Bildes
         hoehe, breite, farbe = img.shape    # Auslesen der Maße für später
 
-        blob = cv.dnn.blobFromImage(img, 1 / 255., (256, 256),          # Erstellen des blobs für KI
+        # Erstellen des blobs für KI
+        blob = cv.dnn.blobFromImage(img, 1 / 255., (256, 256),
                                     (123.675, 116.28, 103.53),
                                     True, False)
 
-        model.setInput(blob)            # Anwenden des blobs auf KI
-        output = model.forward()        # Ausgabe der KI
+        model.setInput(blob)                # Anwenden des blobs auf KI
+        output = model.forward()            # Ausgabe der KI
 
         output = output[0, :, :]                            # Zwischenspeichern des Ausgabe-Arrays
         output = cv.resize(output, (breite, hoehe))         # Anpassen des Ausgabebildes in Ursprungsform
@@ -32,7 +31,8 @@ def Tiefenerkennung(Kamera, Aufloesung, Mindestabstand, Kantenwert, Rundheit, Mi
         output = cv.normalize(outfordm, None, 0, 255, norm_type=cv.NORM_MINMAX, dtype=cv.CV_8U)
         outfordmht = cv.cvtColor(img, cv.COLOR_BGR2HSV)
 
-        circles = cv.HoughCircles(output, cv.HOUGH_GRADIENT,                    # Erkennen von Kreisen in der Heatmap
+        # Erkennen von Kreisen in der Heatmap
+        circles = cv.HoughCircles(output, cv.HOUGH_GRADIENT,
                                   Aufloesung, Mindestabstand,
                                   param1=Kantenwert, param2=Rundheit,
                                   minRadius=MinRadius, maxRadius=MaxRadius)
@@ -43,13 +43,15 @@ def Tiefenerkennung(Kamera, Aufloesung, Mindestabstand, Kantenwert, Rundheit, Mi
                 # Bild, Zentrum, Radius, Farbe in RGB, Dicke
                 cv.circle(img, (i[0], i[1]), i[2], (255, 0, 0), 5)  # Zeichnen des Kreises
                 cv.circle(img, (i[0], i[1]), 1, (0, 0, 0), 5)       # Zeichnen des Zentrums
-                print(i[0], i[1])                                   # Ausgabe der Position in Konsole
+
+                skala = (i[0]-203)*(40/185)         # Umskalieren von Pixel in cm
+                print(skala)                        # Ausgabe der Position in Konsole
 
         cv.imshow('Tiefenerkennung', img)           # Anzeigen des Bildes auf Monitor, zur Überwachung
         cv.imshow('Depth Map', outfordm)            # Anzeigen der Depth Map
         cv.imshow('Depth Map Heat', outfordmht)     # Anzeigen der Depth Map im Heat Map Stil
 
-        if cv.waitKey(1) == ord("0"):  # Abbruchbedingung der Schleife festgelegt als Knopfdruck 0
+        if cv.waitKey(1) == ord("0"):               # Abbruchbedingung der Schleife festgelegt als Knopfdruck 0
             break
 
     cam.release()           # Freigeben der Kamera für andere Zwecke

@@ -1,29 +1,32 @@
-def TemplateMatching(Kamera, Aufloesung):
+def TemplateMatching(Kamera):
 
     import cv2 as cv
-    import numpy as np
 
     # Öffnen des Vorlagebildes
     template = cv.imread('C:\\Users\\giann\\PycharmProjects\\Projektarbeit\\Fotos\\Ballfoto3.png', 0)
-    w, h = template.shape[::-1]
-    w = round(w/2)
-    h = round(h/2)
-    cv.imshow("Vorgabe", template)                      # Anzeigen der Vorlage mittels der gesucht wird
+
+    b, h = template.shape[::-1]             # Speichern der Abmessungen der Vorlage
+    b = round(b/2)                          # Halbieren der Breite der Vorlage
+    h = round(h/2)                          # Halbieren der Höhe der Vorlage
+    cv.imshow("Vorgabe", template)          # Anzeigen der Vorlage mittels der gesucht wird
 
     cam = cv.VideoCapture(Kamera)           # Aufruf der Kamera
-    # cam.set(cv.CAP_PROP_BUFFERSIZE, 1)    # Verarbeitungszeit maximal 1ms
+    cam.set(cv.CAP_PROP_BUFFERSIZE, 1)      # Verarbeitungszeit maximal 1ms
 
-    while True:                 # While-Schleife, damit das Programm per Knopfdruck geschlossen werden kann
+    while True:                             # While-Schleife, damit das Programm per Knopfdruck geschlossen werden kann
 
-        _, img = cam.read()                                 # Auslesen der Kamera
-        # img = img[100:200, 100:200]                       # Zuschneiden des Bildes
+        _, img = cam.read()                 # Auslesen der Kamera
+        img = img[200:250, 100:500]         # Zuschneiden des Bildes
 
-        grau = cv.cvtColor(img, cv.COLOR_BGR2GRAY)          # Umwandlung in Graustufen
+        grau = cv.cvtColor(img, cv.COLOR_BGR2GRAY)                          # Umwandlung in Graustufen
 
-        erg = cv.matchTemplate(grau, template, cv.TM_CCORR_NORMED)      # Vergleichen von Video und Vorlage
+        erg = cv.matchTemplate(grau, template, cv.TM_CCORR_NORMED)          # Vergleichen von Video und Vorlage
 
-        min_val, max_val, min_loc, max_loc = cv.minMaxLoc(erg)
-        cv.circle(img, (max_loc[0]+w, max_loc[1]+h), w, (255, 0, 0), 2)
+        min_val, max_val, min_loc, max_loc = cv.minMaxLoc(erg)              # Ausgabe der Extrema des Vergleichs
+        cv.circle(img, (max_loc[0]+b, max_loc[1]+h), b, (255, 0, 0), 2)     # Zeichnen der Kreise um Maximum
+
+        skala = (max_loc[0]-203)*(40/185)       # Umskalieren von Pixel in cm
+        print(skala)                            # Ausgabe der x-Koordinate
 
         cv.imshow('Template Matching', img)     # Anzeigen des Bildes auf Monitor, zur Überwachung
         cv.imshow('Deckung', erg)               # Anzeigen des Überdeckungsabbildes
