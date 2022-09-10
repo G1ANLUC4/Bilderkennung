@@ -3,10 +3,10 @@ def Tiefenerkennung(Kamera, Aufloesung, Mindestabstand, Kantenwert, Rundheit, Mi
     import numpy as np
     import cv2 as cv
 
-    model = cv.dnn.readNet('models/model-small.onnx')       # Auswahl des KI-Modells
+    model = cv.dnn.readNet('C:\\Users\\giann\\PycharmProjects\\Projektarbeit\\models\\model-small.onnx')       # Auswahl des KI-Modells
 
-    model.setPreferableBackend(cv.dnn.DNN_BACKEND_CUDA)     # Auswahl der GPU als Rechenort
-    model.setPreferableTarget(cv.dnn.DNN_TARGET_CUDA)       # Auswahl der GPU als Rechenort
+    #model.setPreferableBackend(cv.dnn.DNN_BACKEND_CUDA)     # Auswahl der GPU als Rechenort
+    #model.setPreferableTarget(cv.dnn.DNN_TARGET_CUDA)       # Auswahl der GPU als Rechenort
 
     cam = cv.VideoCapture(Kamera)           # Aufruf der Kamera
     # cam.set(cv.CAP_PROP_BUFFERSIZE, 1)    # Verarbeitungszeit maximal 1ms

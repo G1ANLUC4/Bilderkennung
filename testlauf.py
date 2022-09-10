@@ -3,15 +3,14 @@ def Kreiserkennung(Aufloesung, Mindestabstand, Kantenwert, Rundheit, MinRadius, 
     import cv2 as cv
     import numpy as np
 
-    template = cv.imread('Fotos/Testbild.png', 0)   # Öffnen des Vorlagebildes
+    template = cv.imread('C:\\Users\\giann\\PycharmProjects\\Projektarbeit\\Fotos\\Testbild.png', 0)   # Öffnen des Vorlagebildes
     cv.imshow("Vorgabe", template)                  # Anzeigen der Vorlage
 
     while True:                 # While-Schleife, damit das Programm per Knopfdruck geschlossen werden kann
 
-        grau = cv.cvtColor(template, cv.COLOR_BGR2GRAY)     # Konvertierung in Graustufen
-        kanten = cv.Canny(grau, 30, 100)                    # Ausgabe des Canny-Algs, ähnlich wie in HoughCircles
+        #grau = cv.cvtColor(template, cv.COLOR_BGR2GRAY)     # Konvertierung in Graustufen
 
-        circles = cv.HoughCircles(grau, cv.HOUGH_GRADIENT,                     # Anwendung der HoughCircles Funktion
+        circles = cv.HoughCircles(template, cv.HOUGH_GRADIENT,                     # Anwendung der HoughCircles Funktion
                                   Aufloesung, Mindestabstand,
                                   param1=Kantenwert, param2=Rundheit,
                                   minRadius=MinRadius, maxRadius=MaxRadius)
@@ -25,8 +24,7 @@ def Kreiserkennung(Aufloesung, Mindestabstand, Kantenwert, Rundheit, MinRadius, 
                 print(i[0], i[1])                                       # Ausgabe der x und y Koordinate
 
         cv.imshow('Kreiserkennung', template)        # Anzeigen des Bildes auf Monitor, zur Überwachung
-        cv.imshow('Graustufen', grau)           # Anzeigen des Graustufenbildes
-        cv.imshow('Kantenerkennung', kanten)    # Anzeigen des Kantenbildes
+        #cv.imshow('Graustufen', grau)           # Anzeigen des Graustufenbildes
 
         if cv.waitKey(1) == ord("0"):           # Abbruchbedingung der Schleife festgelegt als Knopfdruck 0
             break

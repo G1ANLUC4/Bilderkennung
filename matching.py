@@ -3,7 +3,11 @@ def TemplateMatching(Kamera, Aufloesung):
     import cv2 as cv
     import numpy as np
 
-    template = cv.imread('Fotos/Ballfoto3.png', 0)      # Öffnen des Vorlagebildes
+    # Öffnen des Vorlagebildes
+    template = cv.imread('C:\\Users\\giann\\PycharmProjects\\Projektarbeit\\Fotos\\Ballfoto3.png', 0)
+    w, h = template.shape[::-1]
+    w = round(w/2)
+    h = round(h/2)
     cv.imshow("Vorgabe", template)                      # Anzeigen der Vorlage mittels der gesucht wird
 
     cam = cv.VideoCapture(Kamera)           # Aufruf der Kamera
@@ -17,12 +21,9 @@ def TemplateMatching(Kamera, Aufloesung):
         grau = cv.cvtColor(img, cv.COLOR_BGR2GRAY)          # Umwandlung in Graustufen
 
         erg = cv.matchTemplate(grau, template, cv.TM_CCORR_NORMED)      # Vergleichen von Video und Vorlage
-        points = np.argwhere(erg <= Aufloesung)                         # Auswahl der Punkte mit großer Übereinstimmung
 
-        center, radius = cv.minEnclosingCircle(points)                  # Kreiszeichnung um die gefilterten Pixel
-        cv.circle(img, (int(center[1]), int(center[0])), int(radius), (255, 0, 0), 5)   # Zeichnen des Kreises
-        cv.circle(img, (int(center[1]), int(center[0])), 1, (0, 0, 0), 5)               # Zeichnen des Zentrums
-        print(int(center[1]), int(center[0]))                                           # Ausgabe der x und y Koordinate
+        min_val, max_val, min_loc, max_loc = cv.minMaxLoc(erg)
+        cv.circle(img, (max_loc[0]+w, max_loc[1]+h), w, (255, 0, 0), 2)
 
         cv.imshow('Template Matching', img)     # Anzeigen des Bildes auf Monitor, zur Überwachung
         cv.imshow('Deckung', erg)               # Anzeigen des Überdeckungsabbildes
@@ -33,5 +34,3 @@ def TemplateMatching(Kamera, Aufloesung):
 
     cam.release()               # Freigeben der Kamera für andere Zwecke
     cv.destroyAllWindows()      # Schließen aller Fenster, die durch Anwendung geöffnet wurden.
-
-
