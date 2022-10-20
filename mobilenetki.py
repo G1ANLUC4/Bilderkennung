@@ -22,8 +22,9 @@ def KuenstlicheIntelligenz(Kamera):
     import cv2 as cv
 
     # Auswahl der verwendeten KI-Modelle
-    model = cv.dnn.readNetFromTensorflow('models/frozen_inference_graph.pb',
-                                         'models/ssd_mobilenet_v2_coco_2018_03_29.pbtxt')
+    model = cv.dnn.readNetFromTensorflow(
+        'C:\\Users\\giann\\PycharmProjects\\Projektarbeit\\models\\frozen_inference_graph.pb',
+        'C:\\Users\\giann\\PycharmProjects\\Projektarbeit\\models\\ssd_mobilenet_v2_coco_2018_03_29.pbtxt')
 
     cam = cv.VideoCapture(Kamera)       # Aufruf der Kamera
     cam.set(cv.CAP_PROP_BUFFERSIZE, 1)  # Verarbeitungszeit maximal 1ms
@@ -31,7 +32,7 @@ def KuenstlicheIntelligenz(Kamera):
     while True:                         # While-Schleife, damit das Programm per Knopfdruck geschlossen werden kann
 
         _, img = cam.read()                 # Auslesen der Kamera
-        img = img[200:250, 100:500]         # Zuschneiden des Bildes
+        #img = img[200:250, 100:500]         # Zuschneiden des Bildes
         hoehe, breite, farbe = img.shape    # Auslesen der Maße für später
 
         blob = cv.dnn.blobFromImage(img, size=(hoehe, breite), swapRB=True)     # Erstellen des blobs in rgb

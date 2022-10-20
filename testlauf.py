@@ -1,5 +1,7 @@
 def Kreiserkennung(Aufloesung, Mindestabstand, Kantenwert, Rundheit, MinRadius, MaxRadius):
 
+    # An sich nur für unabhängige Sachen geschrieben, nicht für Betrieb relevant
+
     import cv2 as cv
     import numpy as np
 

@@ -3,6 +3,8 @@ def Tiefenerkennung(Kamera, Aufloesung, Mindestabstand, Kantenwert, Rundheit, Mi
     import numpy as np
     import cv2 as cv
 
+    # noch nicht angepasst für Testlauf
+
     # Auswahl des KI-Modells
     model = cv.dnn.readNet('C:\\Users\\giann\\PycharmProjects\\Projektarbeit\\models\\model-small.onnx')
 

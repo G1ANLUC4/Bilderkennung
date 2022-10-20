@@ -9,13 +9,13 @@ import testlauf as tl
 # Hinweis: Die Ausführung des Codes kann mit Drücken der Taste "0" beendet werden.
 
 # Hier Methodenauswahl über Änderung des int-Wertes: (Legende siehe unten)
-Methode = 1
+Methode = 3
 # Auswahl der Kamera, wobei 0 --> Innenkamera und 1 --> Außenkamera
-Cam = 0
+Cam = 1
 
 if Methode == 1:
     print("HoughCircles")
-    hc.Kreiserkennung(Cam, 7, 400, 150, 50, 8, 13)
+    hc.Kreiserkennung(Cam, 2, 400, 250, 20, 8, 12)
 
     # Parameter hierbei sind:
     # Aufloesung        -->     Verhältnis zwischen Framerate und Algorithmus-Durchführung
@@ -28,8 +28,8 @@ if Methode == 1:
 elif Methode == 2:
     print("ColorRecognition")
     # Verschiedene Versionen für andere Ballfarben
-    # clr.Farberkennung(Cam, 0, 10, 150, 255, 150, 255)     # rot
-    clr.Farberkennung(Cam, 0, 360, 0, 120, 0, 120)          # schwarz
+    clr.Farberkennung(Cam, 0, 10, 150, 255, 150, 255)  # rot
+    # clr.Farberkennung(Cam, 0, 360, 0, 120, 0, 120)          # schwarz
 
     # Parameter hierbei sind:
     # MinWinkel         -->     Unterer Winkel der Farbe im HSV-Modell, ab dem gesucht wird
@@ -41,7 +41,7 @@ elif Methode == 2:
 
 elif Methode == 3:
     print("Kontrasterkennung")
-    cst.Kontrasterkennung(Cam, 7, 400, 150, 50, 8, 13)
+    cst.Kontrasterkennung(Cam, 150, 125, 4, 1, 40, 300)
 
     # Parameter hierbei sind:
     # Untergrenze       -->     unterer Grenzwert, ab dem ein Pixel weiß dargestellt wird
@@ -52,7 +52,7 @@ elif Methode == 3:
     # MaxFlaeche        -->     Maximale Fläche des Kreises, der erkannt werden soll
 
 elif Methode == 4:
-    print("Tamplate-Matching")
+    print("Template-Matching")
     tm.TemplateMatching(Cam)
 
 elif Methode == 5:
