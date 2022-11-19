@@ -1,79 +1,80 @@
-import houghcircles as hc
-import color as clr
-import contrast as cst
+import contur_detection as ctr
+import color_detection as clr
+import contrast_detection as cst
 import depth_estimation as de
-import mobilenetki as ki
-import matching as tm
-import testlauf as tl
+import ai_mobilenet as aim
+import template_matching as tm
+import test_run as tr
 
-# Hinweis: Die Ausführung des Codes kann mit Drücken der Taste "0" beendet werden.
+# Notice: You can stop the program by pressing "0"
 
-# Hier Methodenauswahl über Änderung des int-Wertes: (Legende siehe unten)
-Methode = 3
-# Auswahl der Kamera, wobei 0 --> Innenkamera und 1 --> Außenkamera
-Cam = 1
+# Choose the method by changing the number corresponding to the entry in the elif-statement
+method = 0
+# Choose 0 or 1 to change the camera (in some cases it may be 2)
+camera = 0
 
-if Methode == 1:
-    print("HoughCircles")
-    hc.Kreiserkennung(Cam, 2, 400, 250, 20, 8, 12)
-
-    # Parameter hierbei sind:
-    # Aufloesung        -->     Verhältnis zwischen Framerate und Algorithmus-Durchführung
-    # Mindestabstand    -->     Mindestabstand zwischen den Zentren der zu erkennenden Kreise
-    # Kantenwert        -->     Schwellenwert der an den Canny-Algorithmus weitergegeben wird (Matrixauflösung)
-    # Rundheit          -->     Je kleiner dieser Wert, desto genauer müssen die Kreise sein, um erkannt zu werden
-    # MinRadius         -->     Kleinster Kreisradius, ab dem der Kreis gesucht wird
-    # MaxRadius         -->     Größter Kreisradius, bis zu dem der Kreis gesucht werden soll
-
-elif Methode == 2:
-    print("ColorRecognition")
-    # Verschiedene Versionen für andere Ballfarben
-    clr.Farberkennung(Cam, 0, 10, 150, 255, 150, 255)  # rot
-    # clr.Farberkennung(Cam, 0, 360, 0, 120, 0, 120)          # schwarz
+if method == 1:
+    print("Using contur_detection:")
+    ctr.circles(camera, 2, 400, 250, 20, 8, 12)
 
     # Parameter hierbei sind:
-    # MinWinkel         -->     Unterer Winkel der Farbe im HSV-Modell, ab dem gesucht wird
-    # MaxWinkel         -->     Oberer Winkel der Farbe im HSV-Modell, ab dem gesucht wird
-    # MinSaettigung     -->     Minimale Saettigung, ab der erkannt werden soll
-    # MaxSaettigung     -->     Maximale Saettigung, ab der erkannt werden soll
-    # MinHelligkeit     -->     Untere Helligkeit, ab der erkannt werden soll
-    # MaxHelligkeit     -->     Obere Helligkeit, ab er erkannt werden soll
+    # dp        -->     Verhältnis zwischen Framerate und Algorithmus-Durchführung
+    # minDist    -->     minDist zwischen den Zentren der zu erkennenden Kreise
+    # edgeValue        -->     Schwellenwert der an den Canny-Algorithmus weitergegeben wird (Matrixauflösung)
+    # roundness          -->     Je kleiner dieser Wert, desto genauer müssen die Kreise sein, um erkannt zu werden
+    # minRadius         -->     Kleinster Kreisradius, ab dem der Kreis gesucht wird
+    # maxRadius         -->     Größter Kreisradius, bis zu dem der Kreis gesucht werden soll
 
-elif Methode == 3:
-    print("Kontrasterkennung")
-    cst.Kontrasterkennung(Cam, 150, 125, 4, 1, 40, 300)
+elif method == 2:
+    print("Using color_detection:")
+    clr.color(camera, 50)  # für rot/schwarz ca 50/16
 
-    # Parameter hierbei sind:
-    # Untergrenze       -->     unterer Grenzwert, ab dem ein Pixel weiß dargestellt wird
-    # Obergrenze        -->     oberer Grenzwert, bis zu dem ein Pixel weiß dargestellt wird
-    # Ordnung           -->     Größe der Ellipsen-Maske, mit der gesucht wird
-    # Iterationen       -->     Anzahl der Iterationen, mit der die Bit-Maske durchläuft
-    # MinFlaeche        -->     Minimale Fläche des Kreises, der erkannt werden soll
-    # MaxFlaeche        -->     Maximale Fläche des Kreises, der erkannt werden soll
+    # Parameter hierbei ist:
+    # variance        -->     Werteabstand, um mittlere detektierte Farbe, der als gültig eingestuft wird
 
-elif Methode == 4:
-    print("Template-Matching")
-    tm.TemplateMatching(Cam)
-
-elif Methode == 5:
-    print("Tiefenerkennung")
-    de.Tiefenerkennung(Cam, 1, 2000, 100, 0.9, 40, 170)
+elif method == 3:
+    print("Using contrast_detection:")
+    cst.contrast(camera, 150, 125, 4, 2, 40, 300)  # rot
+    # cst.contrast(camera, 95, 125, 4, 2, 40, 320)  # schwarz
 
     # Parameter hierbei sind:
-    # Aufloesung        -->     Verhältnis zwischen Framerate und Algorithmus-Durchführung
-    # Mindestabstand    -->     Mindestabstand zwischen den Zentren der zu erkennenden Kreise
-    # Kantenwert        -->     Schwellenwert der an den Canny-Algorithmus weitergegeben wird (Matrixauflösung)
-    # Rundheit          -->     Je kleiner dieser Wert, desto genauer müssen die Kreise sein, um erkannt zu werden
-    # MinRadius         -->     Kleinster Kreisradius, ab dem der Kreis gesucht wird
-    # MaxRadius         -->     Größter Kreisradius, bis zu dem der Kreis gesucht werden soll
+    # thresh       -->     unterer Grenzwert, ab dem ein Pixel weiß dargestellt wird
+    # maxval        -->     oberer Grenzwert, bis zu dem ein Pixel weiß dargestellt wird
+    # order           -->     Größe der Ellipsen-Maske, mit der gesucht wird
+    # iterations       -->     Anzahl der iterations, mit der die Bit-Maske durchläuft
+    # min_area        -->     Minimale Fläche des Kreises, der erkannt werden soll
+    # max_area        -->     Maximale Fläche des Kreises, der erkannt werden soll
 
-elif Methode == 6:
-    print("Mobilenet-KI")
-    ki.KuenstlicheIntelligenz(Cam)
+elif method == 4:
+    print("Using template_matching:")
+    tm.matching(camera)
 
-elif Methode == 7:
-    print("Testlauf")
-    tl.Kreiserkennung(7, 2000, 100, 0.9, 40, 170)
+elif method == 5:
+    print("Using depth_estimation:")
+    de.depth(camera, 1, 2000, 100, 0.9, 40, 170)
+
+    # Parameter hierbei sind:
+    # dp        -->     Verhältnis zwischen Framerate und Algorithmus-Durchführung
+    # minDist    -->     minDist zwischen den Zentren der zu erkennenden Kreise
+    # edgeValue        -->     Schwellenwert der an den Canny-Algorithmus weitergegeben wird (Matrixauflösung)
+    # roundness          -->     Je kleiner dieser Wert, desto genauer müssen die Kreise sein, um erkannt zu werden
+    # minRadius         -->     Kleinster Kreisradius, ab dem der Kreis gesucht wird
+    # maxRadius         -->     Größter Kreisradius, bis zu dem der Kreis gesucht werden soll
+
+elif method == 6:
+    print("Using ai_mobilenet:")
+    aim.ai(camera)
+
+elif method == 7:
+    print("Using test_run")
+    tr.test(camera)
 
 else:
-    print("Bitte wählen Sie eine gültige Methode aus...")
+    print("Please choose an existing method")
+    print("1 --> contur_detection")
+    print("2 --> color_detection")
+    print("3 --> contrast_detection")
+    print("4 --> template_matching")
+    print("5 --> depth_estimation")
+    print("6 --> ai_mobilenet")
+    print("7 --> test_run")

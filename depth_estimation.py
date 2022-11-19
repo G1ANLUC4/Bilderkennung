@@ -1,60 +1,63 @@
-def Tiefenerkennung(Kamera, Aufloesung, Mindestabstand, Kantenwert, Rundheit, MinRadius, MaxRadius):
-
+def depth(camera, dp, minDist, edgeValue, roundness, minRadius, maxRadius):
     import numpy as np
     import cv2 as cv
+    import datetime as dt
 
-    # noch nicht angepasst für Testlauf
-
-    # Auswahl des KI-Modells
+    # Selection of the used model
     model = cv.dnn.readNet('C:\\Users\\giann\\PycharmProjects\\Projektarbeit\\models\\model-small.onnx')
 
-    cam = cv.VideoCapture(Kamera)           # Aufruf der Kamera
-    # cam.set(cv.CAP_PROP_BUFFERSIZE, 1)    # Verarbeitungszeit maximal 1ms
+    cam = cv.VideoCapture(camera)           # Access the right camera
+    # cam.set(cv.CAP_PROP_BUFFERSIZE, 1)      # Setting the buffersize to 1ms
 
-    while True:                             # While-Schleife, damit das Programm per Knopfdruck geschlossen werden kann
+    referencetime = dt.datetime.now()       # Using the time of the start as reference to measure the time of one cycle
 
-        _, img = cam.read()                 # Auslesen der Kamera
-        img = img[200:250, 100:500]         # Zuschneiden des Bildes
-        hoehe, breite, farbe = img.shape    # Auslesen der Maße für später
+    while True:                             # While-loop, can be broken by pressing "0"
 
-        # Erstellen des blobs für KI
-        blob = cv.dnn.blobFromImage(img, 1 / 255., (256, 256),
-                                    (123.675, 116.28, 103.53),
-                                    True, False)
+        if cv.waitKey(1) == ord("1"):       # By pressing "1" you can output the following string
+            print("Start of the dataset")   # in the console
 
-        model.setInput(blob)                # Anwenden des blobs auf KI
-        output = model.forward()            # Ausgabe der KI
+        _, img = cam.read()                 # Reading the camera
+        img = img[200:250, 100:500]         # Cutting the picture to only show the track
+        h, w, _ = img.shape                 # Saving the measures
 
-        output = output[0, :, :]                            # Zwischenspeichern des Ausgabe-Arrays
-        output = cv.resize(output, (breite, hoehe))         # Anpassen des Ausgabebildes in Ursprungsform
+        # Creating a blob
+        blob = cv.dnn.blobFromImage(img, 1 / 255., (256, 256), (123.675, 116.28, 103.53), True, False)
 
-        # Normalisierung in andere Farbräume
+        model.setInput(blob)                # Using blob
+        output = model.forward()            # Getting output of the ai-model
+
+        output = output[0, :, :]                   # Save the output array
+        output = cv.resize(output, (w, h))         # Cutting output to original size
+
+        # Normalising output into different types
         outfordm = cv.normalize(output, None, 0, 1, norm_type=cv.NORM_MINMAX, dtype=cv.CV_32F)
         output = cv.normalize(outfordm, None, 0, 255, norm_type=cv.NORM_MINMAX, dtype=cv.CV_8U)
         outfordmht = cv.cvtColor(img, cv.COLOR_BGR2HSV)
 
-        # Erkennen von Kreisen in der Heatmap
-        circles = cv.HoughCircles(output, cv.HOUGH_GRADIENT,
-                                  Aufloesung, Mindestabstand,
-                                  param1=Kantenwert, param2=Rundheit,
-                                  minRadius=MinRadius, maxRadius=MaxRadius)
+        # Use of the function "HoughCircles"
+        circles = cv.HoughCircles(output, cv.HOUGH_GRADIENT, dp, minDist, param1=edgeValue, param2=roundness,
+                                  minRadius=minRadius, maxRadius=maxRadius)
 
         if circles is not None:
-            circles = np.uint16(np.around(circles))                 # Konvertieren der Erkannten kreise in U-Int
-            for i in circles[0, :]:                                 # Auslesen der Kreiszentren
-                # Bild, Zentrum, Radius, Farbe in RGB, Dicke
-                cv.circle(img, (i[0], i[1]), i[2], (255, 0, 0), 5)  # Zeichnen des Kreises
-                cv.circle(img, (i[0], i[1]), 1, (0, 0, 0), 5)       # Zeichnen des Zentrums
+            circles = np.uint16(np.around(circles))                 # Converting the detected circles into u-int
+            for i in circles[0, :]:                                 # Extracting only the centers of the circles
+                # picture, center, radius, color, thickness
+                cv.circle(img, (i[0], i[1]), i[2], (255, 0, 0), 2)      # Drawing the outer circle
+                cv.circle(img, (i[0], i[1]), 1, (0, 0, 0), 2)           # Drawing the center
 
-                skala = (i[0]-203)*(40/185)         # Umskalieren von Pixel in cm
-                print(skala)                        # Ausgabe der Position in Konsole
+                scale = (i[0]-203)*(40/185)         # Converting pixels into cm
+                now = dt.datetime.now()             # Determining the actual time
+                delta = now - referencetime         # Subtract times to get the passed timedelta
 
-        cv.imshow('Tiefenerkennung', img)           # Anzeigen des Bildes auf Monitor, zur Überwachung
-        cv.imshow('Depth Map', outfordm)            # Anzeigen der Depth Map
-        cv.imshow('Depth Map Heat', outfordmht)     # Anzeigen der Depth Map im Heat Map Stil
+                # Outputting the time and position in the console
+                print(str(delta).replace('0:00:', '').replace('.', ','), str(scale).replace('.', ','))
 
-        if cv.waitKey(1) == ord("0"):               # Abbruchbedingung der Schleife festgelegt als Knopfdruck 0
+        cv.imshow('depth_estimation', img)          # Showing the picture with detected circles
+        cv.imshow('depth_map', outfordm)            # Showing the Depth Map
+        cv.imshow('heat_map', outfordmht)           # Showing the Depth Map as Heat Map
+
+        if cv.waitKey(1) == ord("0"):               # Breaking out of the loop by pressing "0"
             break
 
-    cam.release()           # Freigeben der Kamera für andere Zwecke
-    cv.destroyAllWindows()  # Schließen aller Fenster, die durch Anwendung geöffnet wurden.
+    cam.release()                                   # Releasing the camera
+    cv.destroyAllWindows()                          # Closes all windows
