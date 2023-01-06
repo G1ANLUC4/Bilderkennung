@@ -8,7 +8,8 @@ def test(cam):
     while True:
 
         _, img = cam.read()
-        cv.imshow('picture', img)
+        img = img[186:250, 100:500]         # Cutting the picture to only show the track
+        cv.imshow('image', img)
 
         if cv.waitKey(1) == ord("0"):
             break

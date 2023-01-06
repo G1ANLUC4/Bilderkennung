@@ -9,7 +9,7 @@ import test_run as tr
 # Notice: You can stop the program by pressing "0"
 
 # Choose the method by changing the number corresponding to the entry in the elif-statement
-method = 0
+method = 7
 # Choose 0 or 1 to change the camera (in some cases it may be 2)
 camera = 0
 
@@ -17,33 +17,34 @@ if method == 1:
     print("Using contur_detection:")
     ctr.circles(camera, 2, 400, 250, 20, 8, 12)
 
-    # Parameter hierbei sind:
-    # dp        -->     Verhältnis zwischen Framerate und Algorithmus-Durchführung
-    # minDist    -->     minDist zwischen den Zentren der zu erkennenden Kreise
-    # edgeValue        -->     Schwellenwert der an den Canny-Algorithmus weitergegeben wird (Matrixauflösung)
-    # roundness          -->     Je kleiner dieser Wert, desto genauer müssen die Kreise sein, um erkannt zu werden
-    # minRadius         -->     Kleinster Kreisradius, ab dem der Kreis gesucht wird
-    # maxRadius         -->     Größter Kreisradius, bis zu dem der Kreis gesucht werden soll
+    # Parameters are:
+    # dp                -->     inverse ratio of the accumulator resolution to the image resolution
+    # minDist           -->     minimum distance between the centers of the circles
+    # edgeValue         -->     higher threshold of the two passed to the Canny edge detector
+    # roundness         -->     the smaller this is, the more false circles may be detected
+    # minRadius         -->     minimum circle radius
+    # maxRadius         -->     maximum circle radius
 
 elif method == 2:
     print("Using color_detection:")
-    clr.color(camera, 50)  # für rot/schwarz ca 50/16
+    clr.color(camera, 50)  # red ball
+    # clr.color(camera, 16)  # black ball
 
-    # Parameter hierbei ist:
-    # variance        -->     Werteabstand, um mittlere detektierte Farbe, der als gültig eingestuft wird
+    # Parameters are:
+    # variance          -->     value distance around average detected color that is classified as valid
 
 elif method == 3:
     print("Using contrast_detection:")
-    cst.contrast(camera, 150, 125, 4, 2, 40, 300)  # rot
-    # cst.contrast(camera, 95, 125, 4, 2, 40, 320)  # schwarz
+    cst.contrast(camera, 150, 125, 4, 2, 40, 300)  # red ball
+    # cst.contrast(camera, 95, 125, 4, 2, 40, 320)  # black ball
 
-    # Parameter hierbei sind:
-    # thresh       -->     unterer Grenzwert, ab dem ein Pixel weiß dargestellt wird
-    # maxval        -->     oberer Grenzwert, bis zu dem ein Pixel weiß dargestellt wird
-    # order           -->     Größe der Ellipsen-Maske, mit der gesucht wird
-    # iterations       -->     Anzahl der iterations, mit der die Bit-Maske durchläuft
-    # min_area        -->     Minimale Fläche des Kreises, der erkannt werden soll
-    # max_area        -->     Maximale Fläche des Kreises, der erkannt werden soll
+    # Parameters are:
+    # thresh            -->     lower threshold from which a pixel is displayed white
+    # maxval            -->     upper threshold til which a pixel is displayed white
+    # order             -->     order of the ellipse matrix, which is used to search
+    # iterations        -->     number of iterations to use the bit-mask
+    # min_area          -->     minimum area of the circles
+    # max_area          -->     maximum area of the circles
 
 elif method == 4:
     print("Using template_matching:")
@@ -51,19 +52,19 @@ elif method == 4:
 
 elif method == 5:
     print("Using depth_estimation:")
-    de.depth(camera, 1, 2000, 100, 0.9, 40, 170)
+    de.depth(camera, 2, 400, 250, 50, 8, 30)
 
-    # Parameter hierbei sind:
-    # dp        -->     Verhältnis zwischen Framerate und Algorithmus-Durchführung
-    # minDist    -->     minDist zwischen den Zentren der zu erkennenden Kreise
-    # edgeValue        -->     Schwellenwert der an den Canny-Algorithmus weitergegeben wird (Matrixauflösung)
-    # roundness          -->     Je kleiner dieser Wert, desto genauer müssen die Kreise sein, um erkannt zu werden
-    # minRadius         -->     Kleinster Kreisradius, ab dem der Kreis gesucht wird
-    # maxRadius         -->     Größter Kreisradius, bis zu dem der Kreis gesucht werden soll
+    # Parameters are:
+    # dp                -->     inverse ratio of the accumulator resolution to the image resolution
+    # minDist           -->     minimum distance between the centers of the circles
+    # edgeValue         -->     higher threshold of the two passed to the Canny edge detector
+    # roundness         -->     the smaller this is, the more false circles may be detected
+    # minRadius         -->     minimum circle radius
+    # maxRadius         -->     maximum circle radius
 
 elif method == 6:
     print("Using ai_mobilenet:")
-    aim.ai(camera)
+    aim.ai(camera, 0.17)
 
 elif method == 7:
     print("Using test_run")

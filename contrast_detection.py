@@ -1,4 +1,4 @@
-def contrast(camera, thresh, maxval, order, iterations, min_area, max_area):
+def contrast(camera, threshold, maxval, order, iterations, min_area, max_area):
     import cv2 as cv
     import numpy as np
     import datetime as dt
@@ -27,7 +27,7 @@ def contrast(camera, thresh, maxval, order, iterations, min_area, max_area):
         blur = cv.medianBlur(gray, 3)                       # Blurring the picture
 
         # The threshold-analysis divides the picture into black/white respectively 1/0
-        thresh = cv.threshold(blur, thresh, maxval, cv.THRESH_BINARY_INV)[1]
+        thresh = cv.threshold(blur, threshold, maxval, cv.THRESH_BINARY_INV)[1]
 
         structure = cv.getStructuringElement(cv.MORPH_ELLIPSE, (order, order))              # Creating bitmask
         result = cv.morphologyEx(thresh, cv.MORPH_OPEN, structure, iterations=iterations)   # Appy bitmask

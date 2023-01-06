@@ -11,9 +11,9 @@ def color(camera, variance):
     # Taking a picture of the ball to read out the color of the ball
     _, refimg = cam.read()                  # Reading the camera
 
-    refimg = refimg[218:228, 485:495]       # Use this, if the ball is on the right side of the track
-    # refimg = refimg[218:228, 105:110]     # Use this, if the ball is on the left side of the track
-    # refimg = refimg[210:230, 290:310]     # Use this, if the ball is in the middle of the track
+    refimg = refimg[218:228, 485:495]       # Use this, if the ball is on the right side of the track at start
+    # refimg = refimg[218:228, 105:110]     # Use this, if the ball is on the left side of the track at start
+    # refimg = refimg[210:230, 290:310]     # Use this, if the ball is in the middle of the track at start
 
     cv.imshow('color of the ball', refimg)                          # Show the image of the ball
     refimg = cv.cvtColor(refimg, cv.COLOR_BGR2HSV)                  # Converting the image to HSV

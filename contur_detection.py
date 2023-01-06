@@ -22,7 +22,7 @@ def circles(camera, dp, minDist, edgeValue, roundness, minRadius, maxRadius):
         cv.rectangle(img, (0, 0), (500, 40), (255, 255, 255), 10)
 
         gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)          # Converting the picture into grayscale
-        # blur = cv.bilateralFilter(gray, 7, 60, 80)       # Optional blurring of the picture
+        # blurr = cv.bilateralFilter(gray, 7, 60, 80)       # Optional blurring of the picture
         contur = cv.Canny(gray, 30, 100)                    # Using the Canny-Algorithm to show the contur (optional)
 
         # Use of the function "HoughCircles"

@@ -3,7 +3,7 @@ def matching(camera):
     import datetime as dt
 
     # Opening the template
-    # a) on the PC
+    # a) on my PC
     template = cv.imread('C:\\Users\\giann\\PycharmProjects\\Projektarbeit\\Fotos\\Ballfoto3.png', 0)
     # b) on the Raspberry-Pi
     # template = cv.imread('/home/rus/Desktop/Projektarbeit/Fotos/Ballfoto5.png', 0)

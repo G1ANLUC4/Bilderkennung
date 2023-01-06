@@ -1,4 +1,4 @@
-def ai(camera):
+def ai(camera, percentage):
 
     # Zuweisung der KI-Klassen mit Namen
     objectsnames = {0: 'background',
@@ -38,7 +38,7 @@ def ai(camera):
             print("Start of the dataset")   # in the console
 
         _, img = cam.read()                 # Reading the camera
-        # img = img[200:250, 100:500]         # Cutting the picture to only show the track
+        img = img[200:250, 100:500]         # Cutting the picture to only show the track
         height, width, _ = img.shape        # Saving the measures of the templates
 
         blob = cv.dnn.blobFromImage(img, size=(width, height), swapRB=True)     # Creating a blob
@@ -64,7 +64,7 @@ def ai(camera):
 
             for detection in output[0, 0, :, :]:                            # Process every detection
                 confidence = detection[2]                                   # Extracting the confidence of the detection
-                if confidence > .35:                                        # Proceed only, if for great confidence
+                if confidence > percentage:                                 # Proceed only, if for great confidence
                     class_id = detection[1]                                 # Connecting Class-ID
                     class_name = id_Object_class(class_id, objectsnames)    # Connecting Class-Name
 
@@ -81,12 +81,13 @@ def ai(camera):
                     cv.putText(img, class_name, (int(box_x), int(box_y + .005 * height)),
                                cv.FONT_HERSHEY_SIMPLEX, (.0005 * width), (0, 0, 255))
 
-                    now = dt.datetime.now()         # Determining the actual time
-                    delta = now - referencetime     # Subtract times to get the passed timedelta
+                    scale = (detection[3]*width - 200) * (80 / 400)     # Converting pixels into cm
+                    now = dt.datetime.now()                             # Determining the actual time
+                    delta = now - referencetime                         # Subtract times to get the passed timedelta
 
                     # Outputting the time and an empty position in the console
                     print(str(delta).replace('0:00:', '').replace('.', ','),
-                          str(detection[3]*width).replace('.', ','), class_name)
+                          str(scale).replace('.', ','), class_name)
 
                     counter = 1     # Set the counter to 1
 

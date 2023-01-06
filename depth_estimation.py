@@ -17,7 +17,7 @@ def depth(camera, dp, minDist, edgeValue, roundness, minRadius, maxRadius):
             print("Start of the dataset")   # in the console
 
         _, img = cam.read()                 # Reading the camera
-        img = img[200:250, 100:500]         # Cutting the picture to only show the track
+        img = img[208:228, 100:500]         # Cutting the picture to only show the track
         h, w, _ = img.shape                 # Saving the measures
 
         # Creating a blob
@@ -32,7 +32,6 @@ def depth(camera, dp, minDist, edgeValue, roundness, minRadius, maxRadius):
         # Normalising output into different types
         outfordm = cv.normalize(output, None, 0, 1, norm_type=cv.NORM_MINMAX, dtype=cv.CV_32F)
         output = cv.normalize(outfordm, None, 0, 255, norm_type=cv.NORM_MINMAX, dtype=cv.CV_8U)
-        outfordmht = cv.cvtColor(img, cv.COLOR_BGR2HSV)
 
         # Use of the function "HoughCircles"
         circles = cv.HoughCircles(output, cv.HOUGH_GRADIENT, dp, minDist, param1=edgeValue, param2=roundness,
@@ -51,10 +50,13 @@ def depth(camera, dp, minDist, edgeValue, roundness, minRadius, maxRadius):
 
                 # Outputting the time and position in the console
                 print(str(delta).replace('0:00:', '').replace('.', ','), str(scale).replace('.', ','))
+        else:
+            now = dt.datetime.now()  # Determining the actual time
+            delta = now - referencetime  # Subtract times to get the passed timedelta
+            print(str(delta).replace('0:00:', '').replace('.', ','), '-99,99')
 
         cv.imshow('depth_estimation', img)          # Showing the picture with detected circles
         cv.imshow('depth_map', outfordm)            # Showing the Depth Map
-        cv.imshow('heat_map', outfordmht)           # Showing the Depth Map as Heat Map
 
         if cv.waitKey(1) == ord("0"):               # Breaking out of the loop by pressing "0"
             break
